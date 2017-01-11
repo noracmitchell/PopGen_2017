@@ -1,0 +1,9 @@
+model {
+   ## likelihood
+   ##
+   k ~ dbin(p, N)
+
+   ## prior
+   ##
+   p ~ dunif(0,1)
+}
