@@ -1,0 +1,63 @@
+model{
+
+##################
+# heritabilities #
+##################
+
+# use the greenhouse data as half-sibling families to get variance components
+# data: n_greenhouse, n_moms, off, id
+for(i in 1:n_greenhouse){
+	off[i] ~ dnorm(mu_mom[id[i]], tau_within)
+}
+
+for(i in 1:n_moms){
+	mu_mom[i] ~ dnorm(grand_mu, tau_among)
+}
+
+# priors
+grand_mu ~ dnorm(0.0, 1.0)
+var_within ~ dgamma(2.0, 2.0)
+var_among ~ dgamma(2.0, 2.0)
+var_total <- var_among + var_within
+tau_within <- 1.0/var_within
+tau_among <- 1.0/var_among
+
+v_a <- ???
+v_e <- ???
+v_p <- ???
+h_2 <- ??? 
+
+###############################
+# selection differential code #
+###############################
+
+# data: y = fitness of individual i
+# 		x = field trait of individual i
+#		n_field = number of individuals in field
+
+for(i in 1:n_field){
+
+	y[i] ~ dnorm(mu[i], tau)
+	mu[i] <- beta.0 + beta.1*x[i]
+}
+
+# priors
+beta.0 ~ dnorm(0.0, 1.0)
+beta.1 ~ dnorm(0.0, 1.0)
+var.resid ~ dgamma(2.0, 2.0)
+tau <- 1.0/var.resid
+
+S <- ???
+R <- ???
+}
+
+
+
+
+
+
+
+
+
+
+
